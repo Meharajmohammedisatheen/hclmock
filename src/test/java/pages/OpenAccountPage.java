@@ -11,13 +11,12 @@ public class OpenAccountPage {
         this.driver = driver;
     }
 
-    // example locator
+
     By successMsg = By.id("openAccountResult");
 
-    // ❌ WRONG (you had getText(By))
-    // public String getText(By locator)
 
-    // ✅ CORRECT METHOD
+
+
     public String getText(By locator) {
         return driver.findElement(locator).getText();
     }

@@ -21,7 +21,7 @@ public class TransferPage extends BasePage {
         click(transferBtn);
     }
 
-    // REQUIRED METHOD (FIX ERROR)
+
     public boolean isTransferSuccessful() {
         return driver.findElements(successMsg).size() > 0;
     }

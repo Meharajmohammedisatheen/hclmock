@@ -16,18 +16,18 @@ public class TransactionPage extends BasePage {
     By resultTable = By.id("transactionTable");
     By noResultMsg = By.xpath("//*[contains(text(),'No results')]");
 
-    // navigate
+
     public void goToFindTransactions() {
         click(findTransactionsLink);
     }
 
-    // REQUIRED METHOD (FIX ERROR)
+
     public void searchByAmount(String amount) {
         type(amountField, amount);
         click(searchBtn);
     }
 
-    // REQUIRED METHOD (FIX ERROR)
+
     public boolean isTransactionDisplayed() {
         return driver.findElements(resultTable).size() > 0;
     }
