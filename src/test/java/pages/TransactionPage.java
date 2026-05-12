@@ -6,33 +6,33 @@ import org.openqa.selenium.WebDriver;
 
 public class TransactionPage extends BasePage {
 
-    WebDriver driver;
-
     public TransactionPage(WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
-    // Locators
     By findTransactionsLink = By.linkText("Find Transactions");
-    By amountField = By.id("amount");
-    By searchButton = By.xpath("//button[@type='submit']");
+    By amountField = By.id("criteria.amount");
+    By searchBtn = By.xpath("//button[@type='submit']");
+    By resultTable = By.id("transactionTable");
+    By noResultMsg = By.xpath("//*[contains(text(),'No results')]");
 
-    // Navigate
-    public void navigateToFindTransactions() {
+    // navigate
+    public void goToFindTransactions() {
         click(findTransactionsLink);
     }
 
-    // Search by amount
+    // REQUIRED METHOD (FIX ERROR)
     public void searchByAmount(String amount) {
-
-        // IMPORTANT: wait after navigation
-        navigateToFindTransactions();
-
-        waitForVisible(amountField);
         type(amountField, amount);
+        click(searchBtn);
+    }
 
-        click(searchButton);
+    // REQUIRED METHOD (FIX ERROR)
+    public boolean isTransactionDisplayed() {
+        return driver.findElements(resultTable).size() > 0;
+    }
 
+    public boolean isNoResultMessageDisplayed() {
+        return driver.findElements(noResultMsg).size() > 0;
     }
 }

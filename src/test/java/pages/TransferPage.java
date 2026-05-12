@@ -1,34 +1,28 @@
 package pages;
 
+import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
-public class TransferPage {
-
-    WebDriver driver;
-    WebDriverWait wait;
+public class TransferPage extends BasePage {
 
     public TransferPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        super(driver);
     }
 
-    public void transfer(String amountValue) {
+    By transferLink = By.linkText("Transfer Funds");
+    By amount = By.id("amount");
+    By transferBtn = By.xpath("//input[@value='Transfer']");
+    By successMsg = By.xpath("//*[contains(text(),'Transfer Complete')]");
 
-        WebElement amount = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(By.id("amount"))
-        );
-        amount.clear();
-        amount.sendKeys(amountValue);
+    public void transfer(String amt) {
+        click(transferLink);
+        type(amount, amt);
+        click(transferBtn);
+    }
 
-        WebElement transferBtn = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Transfer']"))
-        );
-        transferBtn.click();
+    // REQUIRED METHOD (FIX ERROR)
+    public boolean isTransferSuccessful() {
+        return driver.findElements(successMsg).size() > 0;
     }
 }

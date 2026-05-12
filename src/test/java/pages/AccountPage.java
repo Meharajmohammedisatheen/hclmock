@@ -1,30 +1,18 @@
 package pages;
 
+import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
-public class AccountPage {
-
-    WebDriver driver;
-    WebDriverWait wait;
+public class AccountPage extends BasePage {
 
     public AccountPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        super(driver);
     }
 
-    By accountOverview = By.linkText("Accounts Overview");
+    By overviewTitle = By.xpath("//h1[text()='Accounts Overview']");
 
-    public boolean isAccountDisplayed() {
-        try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(accountOverview));
-            return driver.findElement(accountOverview).isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
+    public boolean isAccountOverviewDisplayed() {
+        return waitForElement(overviewTitle).isDisplayed();
     }
 }

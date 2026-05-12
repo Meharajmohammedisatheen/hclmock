@@ -1,20 +1,21 @@
 package tests;
 
+import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.AccountPage;
+import pages.LoginPage;
 
 public class AccountTest extends BaseTest {
 
     @Test
     public void verifyAccount() {
 
+        LoginPage loginPage = new LoginPage(driver);
         AccountPage accountPage = new AccountPage(driver);
 
-        boolean result = accountPage.isAccountDisplayed();
+        loginPage.login("john", "demo");
 
-        System.out.println("Account visible: " + result);
-
-        Assert.assertTrue(result, "Account is NOT displayed");
+        Assert.assertTrue(accountPage.isAccountOverviewDisplayed());
     }
 }
