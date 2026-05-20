@@ -1,38 +1,44 @@
 package pages;
 
-import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class TransactionPage extends BasePage {
+public class TransactionPage {
+
+    WebDriver driver;
 
     public TransactionPage(WebDriver driver) {
-        super(driver);
+        this.driver = driver;
     }
 
     By findTransactionsLink = By.linkText("Find Transactions");
+
     By amountField = By.id("criteria.amount");
-    By searchBtn = By.xpath("//button[@type='submit']");
-    By resultTable = By.id("transactionTable");
-    By noResultMsg = By.xpath("//*[contains(text(),'No results')]");
 
+    By findByAmountButton = By.id("findByAmount");
 
-    public void goToFindTransactions() {
-        click(findTransactionsLink);
+    By fromDateField = By.id("criteria.fromDate");
+
+    By toDateField = By.id("criteria.toDate");
+
+    By findByDateButton = By.id("findByDateRange");
+
+    public void clickFindTransactions() {
+        driver.findElement(findTransactionsLink).click();
     }
-
 
     public void searchByAmount(String amount) {
-        type(amountField, amount);
-        click(searchBtn);
+        driver.findElement(amountField).sendKeys(amount);
+        driver.findElement(findByAmountButton).click();
     }
 
-
-    public boolean isTransactionDisplayed() {
-        return driver.findElements(resultTable).size() > 0;
+    public void searchByDate(String fromDate, String toDate) {
+        driver.findElement(fromDateField).sendKeys(fromDate);
+        driver.findElement(toDateField).sendKeys(toDate);
+        driver.findElement(findByDateButton).click();
     }
 
-    public boolean isNoResultMessageDisplayed() {
-        return driver.findElements(noResultMsg).size() > 0;
+    public String getPageSource() {
+        return driver.getPageSource();
     }
 }

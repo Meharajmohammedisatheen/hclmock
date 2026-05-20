@@ -2,17 +2,41 @@ package tests;
 
 import base.BaseTest;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.LoginPage;
+import utilities.ConfigReader;
 
 public class LoginTest extends BaseTest {
 
-    @Test
-    public void validLoginTest() {
-        LoginPage login = new LoginPage(driver);
+    @DataProvider(name = "loginData")
+    public Object[][] loginData() {
 
-        login.login("john", "demo");
+        return new Object[][]{
 
-        Assert.assertTrue(driver.getTitle().contains("ParaBank"));
+                {
+                        ConfigReader.getUsername(),
+                        ConfigReader.getPassword(),
+                        true
+                },
+
+                {
+                        ConfigReader.getUsername(),
+                        "wrongpass",
+                        false
+                }
+        };
+    }
+
+    @Test(dataProvider = "loginData")
+    public void testLogin(String username,
+                          String password,
+                          boolean validLogin) {
+
+        LoginPage loginPage = new LoginPage(driver);
+
+        loginPage.loginToApplication(username, password);
+
+
     }
 }

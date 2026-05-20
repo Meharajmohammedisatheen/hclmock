@@ -1,28 +1,42 @@
 package pages;
 
-import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class TransferPage extends BasePage {
+public class TransferPage {
+
+    WebDriver driver;
 
     public TransferPage(WebDriver driver) {
-        super(driver);
+        this.driver = driver;
     }
 
-    By transferLink = By.linkText("Transfer Funds");
-    By amount = By.id("amount");
-    By transferBtn = By.xpath("//input[@value='Transfer']");
-    By successMsg = By.xpath("//*[contains(text(),'Transfer Complete')]");
+    By transferFundsLink = By.linkText("Transfer Funds");
 
-    public void transfer(String amt) {
-        click(transferLink);
-        type(amount, amt);
-        click(transferBtn);
+    By amountField = By.id("amount");
+
+    By transferButton = By.xpath("//input[@value='Transfer']");
+
+    By successMessage = By.className("title");
+
+    public void clickTransferFunds() {
+        driver.findElement(transferFundsLink).click();
     }
 
+    public void enterAmount(String amount) {
+        driver.findElement(amountField).clear();
+        driver.findElement(amountField).sendKeys(amount);
+    }
 
-    public boolean isTransferSuccessful() {
-        return driver.findElements(successMsg).size() > 0;
+    public void clickTransferButton() {
+        driver.findElement(transferButton).click();
+    }
+
+    public String getSuccessMessage() {
+        return driver.findElement(successMessage).getText();
+    }
+
+    public String getPageSource() {
+        return driver.getPageSource();
     }
 }
